@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type MathRequest struct {
@@ -41,8 +42,27 @@ func calculate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var result int
+	switch strings.ToUpper(*body.Operation) {
+	case "ADD":
+		result = *body.FirstNumber + *body.SecondNumber
+	case "SUBTRACT":
+		result = *body.FirstNumber - *body.SecondNumber
+	case "MULTIPLY":
+		result = *body.FirstNumber * *body.SecondNumber
+	case "DIVIDE":
+		if *body.SecondNumber == 0 {
+			http.Error(w, "Cannot divide by 0", http.StatusUnprocessableEntity)
+			return
+		}
+		result = *body.FirstNumber / *body.SecondNumber
+	default:
+		http.Error(w, "Requested operation is invalid. Operation must be ADD, SUBTRACT, MULTIPLY or DIVIDE", http.StatusUnprocessableEntity)
+		return
+	}
+
 	response := MathResponse{
-		Result: 10,
+		Result: result,
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
