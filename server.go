@@ -64,6 +64,14 @@ Expected:
 		return
 	}
 
+	// Ensure all fields are non-nil
+	if err = CheckFields(body); err != nil {
+		http.Error(w, fmt.Sprintf(`%s
+Expected: 
+    %s`, err.Error(), placeholder), http.StatusBadRequest)
+		return
+	}
+
 	// Run desired mathematical operation
 	result, err := calculate(body)
 	if err != nil {
