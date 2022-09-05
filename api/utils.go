@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"errors"
@@ -6,13 +6,16 @@ import (
 	"reflect"
 )
 
+// CheckFields checks that a struct of type T contains non-null values for every type T field
 func CheckFields[T any](data T) error {
 	datatype := reflect.TypeOf(data)
 
+	// Throw error if attempting to evaluate non-struct
 	if datatype.Kind() != reflect.Struct {
 		return errors.New("Data is not of kind struct")
 	}
 
+	// Check each struct field for null values and build error message
 	err := ""
 	errCount := 0
 	for i := 0; i < datatype.NumField(); i++ {
@@ -23,6 +26,7 @@ func CheckFields[T any](data T) error {
 		}
 	}
 
+	// Return nil or error(s)
 	if err == "" {
 		return nil
 	} else {

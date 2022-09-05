@@ -1,4 +1,4 @@
-package main
+package api
 
 type MathRequest struct {
 	FirstNumber  *int    `json:"first_number"`

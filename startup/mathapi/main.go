@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"math-api/api"
 	"net/http"
 )
 
@@ -12,7 +13,7 @@ func main() {
 
 	fmt.Println(fmt.Sprintf("Opening server on %s:%s", host, port))
 
-	http.HandleFunc("/", handleRequest)
+	http.HandleFunc("/", api.HandleRequest)
 	err := http.ListenAndServe(fmt.Sprintf("%s:%s", host, port), nil)
 	log.Fatal(err)
 }

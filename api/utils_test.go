@@ -1,8 +1,8 @@
-package main_test
+package api_test
 
 import (
+	"math-api/api"
 	"testing"
-	"math-api"
 )
 
 func TestCheckField(t *testing.T) {
@@ -16,14 +16,14 @@ func TestCheckField(t *testing.T) {
 	hello := 1
 	bye := 2.2
 
-	err := main.CheckFields(Test{&hi, &hello, &bye})
+	err := api.CheckFields(Test{&hi, &hello, &bye})
 
 	if err != nil {
 		t.Logf("Got %s but expected no error", err)
 		t.Fail()
 	}
 
-	err = main.CheckFields(Test{
+	err = api.CheckFields(Test{
 		hello: &hello,
 		bye:   &bye,
 	})
@@ -33,7 +33,7 @@ func TestCheckField(t *testing.T) {
 		t.Fail()
 	}
 
-	err = main.CheckFields(hi)
+	err = api.CheckFields(hi)
 
 	if err == nil {
 		t.Logf("Got no error, but should have")

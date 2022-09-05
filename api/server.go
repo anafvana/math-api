@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"bytes"
@@ -30,8 +30,8 @@ func calculate(body MathRequest) (int, error) {
 	return result, nil
 }
 
-// handleRequest handles the incoming request, validates method, fields and data, and returns the operation's result (or an error)
-func handleRequest(w http.ResponseWriter, r *http.Request) {
+// HandleRequest handles the incoming request, validates method, fields and data, and returns the operation's result (or an error)
+func HandleRequest(w http.ResponseWriter, r *http.Request) {
 	placeholder := `{
         "first_number": integer,
         "second_number": integer,
